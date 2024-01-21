@@ -1,0 +1,65 @@
+[package]
+name = "grovedb"
+description = "Fully featured database using balanced hierarchical authenticated data structures"
+version = "1.0.0-rc.1"
+license = "MIT"
+homepage = "https://www.grovedb.org"
+repository = "https://github.com/hellarcore/grovedb"
+readme = "../README.md"
+documentation = "https://docs.rs/grovedb"
+
+
+[dependencies]
+grovedb-merk = { version = "1.0.0-rc.1", path = "../merk", optional = true, default-features = false }
+thiserror = { version = "1.0.37", optional = true }
+tempfile = { version = "3.3.0", optional = true }
+bincode = { version = "1.3.3", optional = true }
+serde = { version = "1.0.149", optional = true }
+grovedb-storage = { version = "1.0.0-rc.1", path = "../storage", optional = true }
+grovedb-visualize = { version = "1.0.0-rc.1", path = "../visualize", optional = true }
+hex = { version = "0.4.3", optional = true }
+itertools = { version = "0.10.5", optional = true }
+integer-encoding = { version = "3.0.4", optional = true }
+grovedb-costs = { version = "1.0.0-rc.1", path = "../costs", optional = true }
+nohash-hasher = { version = "0.2.0", optional = true }
+indexmap = { version = "1.9.2", optional = true }
+intmap = { version = "2.0.0", optional = true }
+grovedb-path = { version = "1.0.0-rc.1", path = "../path" }
+
+[dev-dependencies]
+rand = "0.8.5"
+criterion = "0.4.0"
+hex = "0.4.3"
+pretty_assertions = "1.3.0"
+
+[[bench]]
+name = "insertion_benchmark"
+harness = false
+
+[features]
+default = ["full"]
+full = [
+    "grovedb-merk/full",
+    "thiserror",
+    "tempfile",
+    "bincode",
+    "serde/derive",
+    "grovedb-storage/rocksdb_storage",
+    "grovedb-visualize",
+    "hex",
+    "itertools",
+    "integer-encoding",
+    "grovedb-costs",
+    "nohash-hasher",
+    "indexmap",
+    "intmap"
+]
+verify = [
+    "grovedb-merk/verify",
+    "grovedb-costs",
+    "thiserror",
+    "serde/derive",
+    "bincode",
+    "integer-encoding",
+]
+estimated_costs = ["full"]

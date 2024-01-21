@@ -1,0 +1,89 @@
+[package]
+name = "grovedb-merk"
+description = "Merkle key/value store adapted for GroveDB"
+version = "1.0.0-rc.1"
+edition = "2024"
+license = "MIT"
+homepage = "https://www.grovedb.org"
+repository = "https://github.com/hellarcore/grovedb"
+readme = "README.md"
+documentation = "https://docs.rs/grovedb-merk"
+
+[dependencies]
+thiserror = "1.0.37"
+grovedb-storage = { version = "1.0.0-rc.1", path = "../storage", optional = true }
+failure = "0.1.8"
+integer-encoding = "3.0.4"
+indexmap = "1.9.2"
+grovedb-costs = { version = "1.0.0-rc.1", path = "../costs" }
+grovedb-visualize = { version = "1.0.0-rc.1", path = "../visualize" }
+grovedb-path = { version = "1.0.0-rc.1", path = "../path" }
+
+[dependencies.time]
+version = "0.3.17"
+optional = true
+
+[dependencies.hex]
+version = "0.4.3"
+optional = true
+
+[dependencies.colored]
+version = "1.9.3"
+optional = true
+
+[dependencies.num_cpus]
+version = "1.14.0"
+optional = true
+
+[dependencies.byteorder]
+version = "1.4.3"
+optional = true
+
+[dependencies.ed]
+version = "0.2.2"
+optional = true
+
+[dependencies.blake3]
+version = "1.3.3"
+optional = true
+
+[dependencies.rand]
+version = "0.8.5"
+features = ["small_rng"]
+optional = true
+
+[dependencies.jemallocator]
+version = "0.5.0"
+features = ["disable_initial_exec_tls"]
+optional = true
+
+[features]
+default = ["full"]
+full = ["rand",
+        "time",
+        "hex",
+        "colored",
+        "num_cpus",
+        "byteorder",
+        "ed",
+        "blake3",
+        "jemallocator",
+        "grovedb-storage",
+        "grovedb-storage/rocksdb_storage"
+]
+verify = [
+        "ed",
+        "blake3"
+]
+
+[dev-dependencies]
+tempfile = "3.3.0"
+criterion = "0.4.0"
+
+[[bench]]
+name = "merk"
+harness = false
+
+[[bench]]
+name = "ops"
+harness = false
